@@ -24,12 +24,29 @@ public class Books:DictionaryBase{
         Console.WriteLine("{0, 10}{1, 30}{2, 30}{3, 10}", 
                         "ISBN", "Title", "Authors", "Price");
         Console.WriteLine("------------------------------------------------------------------------------------");
-        foreach(DictionaryEntry entry in base.InnerHashtable){
+        /*foreach(DictionaryEntry entry in base.InnerHashtable){
             Book book = (Book)entry.Value;
             Console.WriteLine("{0, 10}{1, 30}{2, 30}{3, 10}", 
                         entry.Key, book.title, book.author, 
                             book.price);
+        }*/
+        IDictionaryEnumerator num = 
+                    base.InnerHashtable.GetEnumerator();
+        while(num.MoveNext()){
+            Book book = (Book)num.Value;
+            Console.WriteLine("{0, 10}{1, 30}{2, 30}{3, 10}", 
+                        num.Key, book.title, book.author, 
+                            book.price);
         }
+    }
+    public Book FindBook(string keyword){
+        foreach(DictionaryEntry entry in base.InnerHashtable){
+            Book book = (Book)entry.Value;
+            if(book.title.Contains(keyword)){
+                return book;
+            }
+        }
+        return null;
     }
 }
 public class Program
@@ -48,5 +65,11 @@ public class Program
         //Console.WriteLine("Title: {0}", bookdict.Items("ISBN01").title);
         //bookdict.Remove("ISBN02");
         bookdict.PrintListofBook();
+
+        string keyword = "Python";
+        Book book = bookdict.FindBook(keyword);
+        if(book != null)
+            Console.WriteLine("Book with [{0}] Found: {1}, {2}, {3}", 
+                    keyword, book.title, book.author, book.price);
     }
 }
