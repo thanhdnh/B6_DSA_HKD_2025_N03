@@ -20,12 +20,33 @@ public class Books:DictionaryBase{
     public Book Items(string key){
         return (Book)base.InnerHashtable[key];
     }
+    public void PrintListofBook(){
+        Console.WriteLine("{0, 10}{1, 30}{2, 30}{3, 10}", 
+                        "ISBN", "Title", "Authors", "Price");
+        Console.WriteLine("------------------------------------------------------------------------------------");
+        foreach(DictionaryEntry entry in base.InnerHashtable){
+            Book book = (Book)entry.Value;
+            Console.WriteLine("{0, 10}{1, 30}{2, 30}{3, 10}", 
+                        entry.Key, book.title, book.author, 
+                            book.price);
+        }
+    }
 }
 public class Program
 {
 
     public static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Console.Clear();
+        Book book1 = new Book("C# Programming", "John Doe", 100);
+        Book book2 = new Book("Java Programming", "Jane Doe", 200);
+        Book book3 = new Book("Python Programming", "Jack Doe", 300);
+        Books bookdict = new Books();
+        bookdict.Add("ISBN01", book1);
+        bookdict.Add("ISBN02", book2);
+        bookdict.Add("ISBN03", book3);
+        //Console.WriteLine("Title: {0}", bookdict.Items("ISBN01").title);
+        //bookdict.Remove("ISBN02");
+        bookdict.PrintListofBook();
     }
 }
