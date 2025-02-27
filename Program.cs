@@ -48,6 +48,13 @@ public class Books:DictionaryBase{
         }
         return null;
     }
+    public void UpdateBook(string key, string title, 
+                        string authors, long price){
+        Book book = (Book)base.InnerHashtable[key];
+        book.title = title;
+        book.author = authors;
+        book.price = price;
+    }
 }
 public class Program
 {
@@ -71,5 +78,8 @@ public class Program
         if(book != null)
             Console.WriteLine("Book with [{0}] Found: {1}, {2}, {3}", 
                     keyword, book.title, book.author, book.price);
+
+        bookdict.UpdateBook("ISBN03", "Python Programming 2nd Ed", "John & Jack Doe", 400);
+        bookdict.PrintListofBook();
     }
 }
